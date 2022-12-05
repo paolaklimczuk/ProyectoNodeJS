@@ -1,45 +1,52 @@
 // Controlador de cursos
 
+const models = require('../database/models/index')
+
 module.exports ={
 
     listarTodos: async (req, res) => {
 
-        try {
-            console.log('ejecutando listarPrueba')
+        const curs = await models.curso.findAll()
 
-            res.json({
-                message: "Listo todos los cursos"
-            })
-        } catch (err) {
-            console.log(err)
-        }
+        res.json({
+            success:true,
+            data: {
+                cursos:curs
+            }
+
+        })
     },
 
     crear: async (req, res) => {
-        try {
-            console.log('ejecutando crear')
-
-            res.json({
-                message: "Creo un curso"
-            })
-        } catch (err) {
-            console.log(err)
-        }
+        const curs = await models.curso.create(req.body)
+        
+        res.json({
+            success:true,
+            data: {
+                id:curs.id
+            }
+        })
 
     },
 
-    listarPorCurso: async (req, res) => {
-
+    listarPorCurso: async (req, res, next) => {
         try {
-            console.log('ejecutando listarPorCurso: ' + req.params.idCurso)
+            const curs = await models.curso.findOne({
+                where: {
+                    id: req.params.idCurso
+                }
+            })            
 
             res.json({
-                message: "Recupero informacion de curso: " + req.params.idCurso
+                success: true,
+                data: {
+                    curso: curs
+                }
             })
-        } catch (err) {
-            console.log(err)
-        }        
 
+        } catch (err) {
+            return next(err)
+        }
     },
     
 }

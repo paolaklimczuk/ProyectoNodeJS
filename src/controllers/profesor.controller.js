@@ -1,45 +1,54 @@
-// Controlador de profesores
+// Controlador de profesor
+
+const models = require('../database/models/index')
 
 module.exports ={
 
     listarTodos: async (req, res) => {
 
-        try {
-            console.log('ejecutando listarPrueba')
+        const prof = await models.profesor.findAll()
 
-            res.json({
-                message: "Listo todos los profesores"
-            })
-        } catch (err) {
-            console.log(err)
-        }
+        res.json({
+            success:true,
+            data: {
+                profesores:prof
+            }
+
+        })
     },
 
     crear: async (req, res) => {
+        const prof = await models.profesor.create(req.body)
+        
+        res.json({
+            success:true,
+            data: {
+                id:prof.id
+            }
+        })
+
+    },
+
+
+    listarPorProfesor: async (req, res, next) => {
         try {
-            console.log('ejecutando crear')
+            const prof = await models.profesor.findOne({
+                where: {
+                    id: req.params.idProfesor
+                }
+            })            
 
             res.json({
-                message: "Creo un profesor"
+                success: true,
+                data: {
+                    profesor: prof
+                }
             })
+
         } catch (err) {
-            console.log(err)
+            return next(err)
         }
-
     },
 
-    listarPorProfesor: async (req, res) => {
-
-        try {
-            console.log('ejecutando listarPorProfesor: ' + req.params.idProfesor)
-
-            res.json({
-                message: "Recupero informacion de profesor: " + req.params.idProfesor
-            })
-        } catch (err) {
-            console.log(err)
-        }        
-
-    },
     
 }

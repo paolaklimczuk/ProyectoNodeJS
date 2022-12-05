@@ -1,45 +1,52 @@
 // Controlador de alumnos
 
+const models = require('../database/models/index')
+
 module.exports ={
 
     listarTodos: async (req, res) => {
 
-        try {
-            console.log('ejecutando listarPrueba')
+        const alumns = await models.alumno.findAll()
 
-            res.json({
-                message: "Listo todos los alumnos"
-            })
-        } catch (err) {
-            console.log(err)
-        }
+        res.json({
+            success:true,
+            data: {
+                alumnos:alumns
+            }
+
+        })
     },
 
     crear: async (req, res) => {
-        try {
-            console.log('ejecutando crear')
-
-            res.json({
-                message: "Creo un alumno"
-            })
-        } catch (err) {
-            console.log(err)
-        }
+        const alum = await models.alumno.create(req.body)
+        
+        res.json({
+            success:true,
+            data: {
+                id:alum.id
+            }
+        })
 
     },
 
-    listarPorAlumno: async (req, res) => {
-
+    listarPorAlumno: async (req, res, next) => {
         try {
-            console.log('ejecutando listarPorAlumno: ' + req.params.idAlumno)
+            const alum = await models.alumno.findOne({
+                where: {
+                    id: req.params.idAlumno
+                }
+            })            
 
             res.json({
-                message: "Recupero informacion de alumno: " + req.params.idAlumno
+                success: true,
+                data: {
+                    alumno: alum
+                }
             })
-        } catch (err) {
-            console.log(err)
-        }        
 
+        } catch (err) {
+            return next(err)
+        }
     },
     
 }
