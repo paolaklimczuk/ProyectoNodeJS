@@ -1,4 +1,7 @@
-'use strict' // para que no se pueda usar variables no definidas
+'use strict'
+const { HasMany } = require("sequelize")
+
+ // para que no se pueda usar variables no definidas
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -23,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
     edad: {
       type: DataTypes.INTEGER,
     },
+    //dni: {
+      //type: DataTypes.INTEGER,
+      //allowNull: true
+    //},
     createdAt: { // fecha de creacion
       type: DataTypes.DATE, // tipo de dato
       field: 'created_at', // nombre de la columna
@@ -45,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Alumno.associate = models => {
-    // aca se relacionan las tablas de la base de datos  
+    Alumno.hasMany(models.curso_alumno)
   }
 
   return Alumno

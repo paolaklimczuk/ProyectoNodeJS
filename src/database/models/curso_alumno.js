@@ -1,28 +1,17 @@
-'use strict' // para que no se pueda usar variables no definidas
+'use strict'
+const { HasMany } = require("sequelize")
+
+ // para que no se pueda usar variables no definidas
 
 module.exports = (sequelize, DataTypes) => {
 
-  let Profesor = sequelize.define('profesor', { // defino el modelo de la tabla profesor
+  let Curso_Alumno = sequelize.define('curso_alumno', { // defino el modelo de la tabla curso_alumno
     id: {
       type: DataTypes.BIGINT, // tipo de dato
       autoIncrement: true, // autoincrementable
       primaryKey: true, // clave primaria 
       allowNull: false // no permitir nulo
-    },
-    nombre: { // nombre de la columna
-      type: DataTypes.STRING, // tipo de dato
-      allowNull: false // no puede ser nulo
-    },
-    apellido: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    email: {
-      type: DataTypes.STRING,
-    },
-    edad: {
-      type: DataTypes.INTEGER,
-    },
+    },    
     createdAt: { // fecha de creacion
       type: DataTypes.DATE, // tipo de dato
       field: 'created_at', // nombre de la columna
@@ -44,9 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true, // no va a modificar el nombre de la tabla a plural
   })
 
-  Profesor.associate = models => {
-   Profesor.hasMany(models.curso)
+  Curso_Alumno.associate = models => {
+    Curso_Alumno.belongsTo(models.curso)
+    Curso_Alumno.belongsTo(models.alumno)
   }
 
-  return Profesor
+  return Curso_Alumno
 }

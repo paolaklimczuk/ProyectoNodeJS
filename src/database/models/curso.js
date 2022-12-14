@@ -1,4 +1,7 @@
-'use strict' // para que no se pueda usar variables no definidas
+'use strict'
+const cursoController = require("../../controllers/curso.controller")
+
+ // para que no se pueda usar variables no definidas
 
 module.exports = (sequelize, DataTypes) => {
 
@@ -44,8 +47,9 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Curso.associate = models => {
-    // aca se relacionan las tablas de la base de datos  
+    Curso.belongsTo(models.profesor)
+    Curso.hasMany(models.curso_alumno)
   }
-
+  
   return Curso
 }

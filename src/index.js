@@ -3,6 +3,8 @@ const logger = require('morgan')
 
 const globalsConstants = require('./const/globalsConstants')
 const routerConfig     = require('./routes/index.routes')
+const errorHandler = require('./middlewares/error')
+let createError = require('http-errors')
 
 const configuracionApi = (app)  => {
 
@@ -13,6 +15,12 @@ const configuracionApi = (app)  => {
 
 const configuracionRouters = (app)  => {         //configuracion de rutas
     app.use('/api/', routerConfig.rutas_init())
+
+    app.use(function(req, res, next) {
+        next(createError(404)) // si no encuentra la ruta se envia error 404
+    })
+
+    app.use(errorHandler)
 } 
 
 

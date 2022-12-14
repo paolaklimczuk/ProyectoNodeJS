@@ -2,7 +2,7 @@
 
 const models = require('../database/models/index')
 
-module.exports ={
+module.exports = {
 
     listarTodos: async (req, res) => {
 
@@ -23,7 +23,7 @@ module.exports ={
         res.json({
             success:true,
             data: {
-                id:curs.id
+                id:curs.id                
             }
         })
 
@@ -34,7 +34,10 @@ module.exports ={
             const curs = await models.curso.findOne({
                 where: {
                     id: req.params.idCurso
-                }
+                },
+                include:[{
+                    model: models.profesor
+                }]
             })            
 
             res.json({

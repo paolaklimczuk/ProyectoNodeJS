@@ -1,6 +1,7 @@
 // Controlador de alumnos
 
 const models = require('../database/models/index')
+const errors = require('../const/error')
 
 module.exports ={
 
@@ -19,6 +20,11 @@ module.exports ={
 
     crear: async (req, res) => {
         const alum = await models.alumno.create(req.body)
+        const rel_alum_curso = models.curso_alumno.create({
+            alumnoId : alum.id,
+            cursoId : req.body.cursoId
+
+        })
         
         res.json({
             success:true,
@@ -34,8 +40,10 @@ module.exports ={
             const alum = await models.alumno.findOne({
                 where: {
                     id: req.params.idAlumno
-                }
-            })            
+                }                              
+            })    
+            if (!alum) return next(errors.AumnoInexistente)
+            
 
             res.json({
                 success: true,
