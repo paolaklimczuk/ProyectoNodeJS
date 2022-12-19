@@ -1,8 +1,4 @@
 'use strict'
-const cursoController = require("../../controllers/curso.controller")
-
- // para que no se pueda usar variables no definidas
-
 module.exports = (sequelize, DataTypes) => {
 
   let Curso = sequelize.define('curso', { // defino el modelo de la tabla curso

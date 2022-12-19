@@ -1,6 +1,7 @@
 'use strict';
 
 const models = require('../models/index')
+const bcrypt = require('bcryptjs')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -13,8 +14,9 @@ module.exports = {
         defaults:{
           nombre:"Paola",
           apellido:"Klimczuk",
-          email:"polyklimczuk@gmail.com",
-          edad:"40"
+          email:"polyklimczuk@gmail.com",          
+          password: bcrypt.hashSync('pepe', 10),
+          edad:40
       }
     }),
 
@@ -25,8 +27,9 @@ module.exports = {
         defaults:{
           nombre:"Valeria",
           apellido:"Klimczuk",
-          email:"valeklimczuk@gmail.com",
-          edad: "41"
+          email:"valeklimczuk@gmail.com",     
+          password: bcrypt.hashSync('pepe2', 10),     
+          edad: 41
         }
       })  
      ])   

@@ -15,6 +15,7 @@ const configuracionApi = (app)  => {
 
 const configuracionRouters = (app)  => {         //configuracion de rutas
     app.use('/api/', routerConfig.rutas_init())
+    app.use('/', routerConfig.rutas_auth())
 
     app.use(function(req, res, next) {
         next(createError(404)) // si no encuentra la ruta se envia error 404

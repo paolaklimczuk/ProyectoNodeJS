@@ -1,7 +1,7 @@
 // Controlador de alumnos
 
 const models = require('../database/models/index')
-const errors = require('../const/error')
+const error = require('../const/error')
 
 module.exports ={
 
@@ -42,7 +42,7 @@ module.exports ={
                     id: req.params.idAlumno
                 }                              
             })    
-            if (!alum) return next(errors.AumnoInexistente)
+            if (!alum) return next(error.AumnoInexistente)
             
 
             res.json({
